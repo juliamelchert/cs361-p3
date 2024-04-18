@@ -25,11 +25,13 @@ This project uses Java to mimic a turing machine.
 
 In order to compile and run the test suite, use the following commands:
 ```
-
+javac tm/TMSimulator.java tm/TMState.java
+java tm/TMSimulator.java fileX.txt
 ```
+where fileX.txt is the filename of the properly-formatted turing machine specifications (see file0.txt for an example).
 
 ## Sources Used
 
-* 
-* 
+* https://www.w3schools.com/java/java_files_read.asp
+* https://piazza.com/class/lqzw3z96xyika/post/72
 * 
