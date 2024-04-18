@@ -88,7 +88,35 @@ public class TMSimulator {
 
     // TODO: Write function that will run through the TMSimulator and change the tape accordingly
     public void runSimulation() {
-        System.out.println("Running simulation...");
+        HashMap<Integer, Character> tape = new HashMap<>();
+        int headPosition = 0;
+
+        while (currentState != finalState) {
+            char curr= tape.getOrDefault(headPosition, '0'); // Assuming '0' is the blank symbol
+    
+            Transition transition = currentState.getTransition(curr);
+            if (transition == null) {
+                break; // Halts if no transition is defined
+            }
+    
+            // Write the character and move the head
+            tape.put(headPosition, transition.writeChar);
+            headPosition += (transition.move == 'R' ? 1 : -1);
+    
+            // Transition to the next state
+            currentState = getState(transition.nextStateLabel);
+        }
+    
+        // Output the content of the tape from the smallest to the largest index visited
+        Integer minIndex = Collections.min(tape.keySet());
+        Integer maxIndex = Collections.max(tape.keySet());
+        StringBuilder output = new StringBuilder();
+        for (int i = minIndex; i <= maxIndex; i++) {
+            output.append(tape.getOrDefault(i, '0'));
+        }
+
+        System.out.println(output.toString());
+
     }
 
     public static void main(String[] args)
@@ -131,16 +159,15 @@ public class TMSimulator {
 
                     // Check if the line is a transition with regex
                     else if (matcher.find()) {
-                        String transition = data;
-
-                        // Add transition to the appropriate "from" state
-                        if (inputCounter < tm.getAlphabetSize() - 1) {
-                            tm.getState(String.valueOf(stateIndex)).addTransition(transition);
-                            inputCounter++;
-                        } else {
-                            tm.getState(String.valueOf(stateIndex)).addTransition(transition);
-                            inputCounter = 0;
-                            stateIndex++;
+                        int fromIndex = Integer.parseInt(matcher.group(1));
+                        char readChar = matcher.group(2).charAt(0);
+                        char writeChar = matcher.group(3).charAt(0);
+                        char move = matcher.group(4).charAt(0);
+                        String toStateString = matcher.group(5);
+                        TMState fromState = tm.getState(String.valueOf(fromIndex));
+                        
+                        if (fromState != null) {
+                            fromState.addTransition(readChar, writeChar, move, toStateString);
                         }
                     }
 

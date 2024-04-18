@@ -10,7 +10,7 @@ import java.util.*;
 public class TMState {
     
     public String label;
-    public Map<Character, TMState> transitions;
+    public Map<Character, Transition> transitions;
 
     /**
      * Constructor for an TMState object
@@ -18,7 +18,7 @@ public class TMState {
     */
     public TMState(String label) {
         this.label = label;
-        this.transitions = new HashMap<Character, TMState>();
+        this.transitions = new HashMap<>();
     }
 
     /**
@@ -32,9 +32,29 @@ public class TMState {
      * Adds a transition to the transitions map for this state
      * @param transition transition from file in the format "next_state, write_symbol, move"
     */
-    public void addTransition(String transition) {
-        // TODO: Implement this function so that the TMState's transitions map is actually updated
-        System.out.println("Adding transition " + transition + " for State " + this.label);
+    public void addTransition(Character readChar, Character writeChar, Character move, String nextStateLabel) {
+        transitions.put(readChar, new Transition(writeChar, move, nextStateLabel));
     }
 
+    /**
+     * Gets transition of given character
+     * @param readChar given character 
+     * @return transition of character
+     */
+    public Transition getTransition(Character readChar) {
+        return transitions.get(readChar);
+    }
+    
+}
+
+class Transition {
+    public char writeChar;
+    public char move;
+    public String nextStateLabel;
+
+    public Transition(char writeChar, char move, String nextStateLabel) {
+        this.writeChar = writeChar;
+        this.move = move;
+        this.nextStateLabel = nextStateLabel;
+    }
 }
