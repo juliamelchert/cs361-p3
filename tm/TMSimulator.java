@@ -119,6 +119,52 @@ public class TMSimulator {
 
     }
 
+    /**
+     * For use in TMSimulatorTest.java
+     * @param lines
+     */
+    public void setupFromLines(List<String> lines) {
+        Pattern transitionPattern = Pattern.compile("^([0-9]+),([0-9]),([0-9]),([LR]),([0-9]+)$");
+        boolean isFirstLine = true, isSecondLine = false;
+    
+        int lineCounter = 0;
+        for (String line : lines) {
+            if (lineCounter == 0) {
+                int numStates = Integer.parseInt(line);
+                for (int i = 0; i <= numStates; i++) {
+                    this.addToStates(new TMState(String.valueOf(i)));
+                }
+                isFirstLine = false;
+                isSecondLine = true;
+            } else if (isSecondLine) {
+                String[] symbols = line.split("");
+                for (String symbol : symbols) {
+                    this.addToAlphabet(symbol);
+                }
+                isSecondLine = false;
+            } else {
+                Matcher matcher = transitionPattern.matcher(line);
+                if (matcher.matches()) {
+                    int fromIndex = Integer.parseInt(matcher.group(1));
+                    char readChar = matcher.group(2).charAt(0);
+                    char writeChar = matcher.group(3).charAt(0);
+                    char move = matcher.group(4).charAt(0);
+                    String toStateLabel = matcher.group(5);
+    
+                    TMState fromState = this.getState(String.valueOf(fromIndex));
+                    if (fromState != null) {
+                        fromState.addTransition(readChar, writeChar, move, toStateLabel);
+                    }
+                } else {
+                    this.setTape(line);
+                }
+            }
+            lineCounter++;
+        }
+    }
+    
+    
+
     public static void main(String[] args)
     {
         if (args.length > 0) {
@@ -165,7 +211,7 @@ public class TMSimulator {
                         char move = matcher.group(4).charAt(0);
                         String toStateString = matcher.group(5);
                         TMState fromState = tm.getState(String.valueOf(fromIndex));
-                        
+
                         if (fromState != null) {
                             fromState.addTransition(readChar, writeChar, move, toStateString);
                         }
