@@ -63,7 +63,7 @@ public class TMSimulator {
 
         //Run the simulation for TM
         TM tm = new TM(states, inputString);
-        tm.simulate();
+        tm.runSimulation();
 
         //Print tape content for output
         tm.printTape();

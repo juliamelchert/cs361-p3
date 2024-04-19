@@ -18,7 +18,8 @@ This project uses Java to mimic a turing machine.
     the amount of error handling lines and made it difficult to validate the input correctly. We decided to change our approach when rereading 
     the project requirements as the input string alphabet was represented as integer numbers instead of a wider range of characters.
     Even with this initial struggle, we worked well together by working on the project at different times, so as to avoid merge conflicts, and 
-    both being willing to put in the work on the project in order to get it done.
+    both being willing to put in the work on the project in order to get it done. Additionally, we made a testing class even though there are only
+    3 outputs to compare to. This wasn't a good use of time and took an hour to debug through but it was good to practice making jUnit tests.
 
 * What concepts still aren't quite clear?
 
@@ -46,15 +47,22 @@ This project uses Java to mimic a turing machine.
 
 ## Compiling and Using
 
-In order to compile and run the test suite, use the following commands:
+In order to compile and run the TMSimulator.java, use the following commands:
 ```
 javac tm/TMSimulator.java tm/TMState.java
-java tm/TMSimulator.java fileX.txt
+java tm/TMSimulator.java <input file>
 ```
-where fileX.txt is the filename of the properly-formatted turing machine specifications (see file0.txt for an example).
+where <input file> is the filename of the properly-formatted turing machine specifications (see file0.txt for an example).
+
+In order to compile and run the testing suite, use the following commands:
+```
+javac -cp ".;lib\junit-4.13.2.jar" tm\TMSimulatorTest.java
+java -cp ".;lib\junit-4.13.2.jar;lib\hamcrest-core-1.3.jar" org.junit.runner.JUnitCore tm.TMSimulatorTest
+```
 
 ## Sources Used
 
 * https://www.w3schools.com/java/java_files_read.asp
 * https://piazza.com/class/lqzw3z96xyika/post/72
 * https://docs.oracle.com/javase/8/docs/api/java/util/Set.html
+* https://code.visualstudio.com/docs/java/java-testing
