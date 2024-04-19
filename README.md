@@ -11,6 +11,11 @@ This project uses Java to mimic a turing machine.
 ## Reflection
 
 * What worked well and what was a struggle?
+At first, we tried using Character and String as the data type for the transition symbol in the Turing Machine simulation. 
+This led to several challenges as the transition definitions in the input files are integers, and converting/parsing the integers
+to characters made it more complex than just reading the integer itself. The need to parse characters back to integers and characters increased
+the amount of error handling lines and made it difficult to validate the input correctly. We decided to change our approach when rereading 
+the project requirements as the input string alphabet was represented as integer numbers instead of a wider range of characters. 
 
 * What concepts still aren't quite clear?
 
