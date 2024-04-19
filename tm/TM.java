@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Collections;
 
 /**
+ * Class to represent a Turing Machine with states.
+ * Has tape to keep track of input string and output string.
  * 
  * @author Axel Murillo
  * @author Julia Melchert
